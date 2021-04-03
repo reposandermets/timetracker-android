@@ -18,13 +18,13 @@ import java.util.Map;
 
 public interface ApiInterface {
     @GET("user")
-    Call<UserResponse[]>getUsers();
+    Call<ArrayList<UserResponse>>getUsers();
 
     @GET("session")
     Call<ArrayList<SessionResponse>>getSession(@Query("user_id") String userId);
 
     @POST("session")
-    Call<SessionResponse>createSession(@FieldMap Map<String, String> map);
+    Call<SessionResponse>createSession(@Body SessionResponse session);
 
     @PATCH("session/{id}")
     Call<SessionResponse>patchSession(@Path("id") String id, @Body SessionResponse session);

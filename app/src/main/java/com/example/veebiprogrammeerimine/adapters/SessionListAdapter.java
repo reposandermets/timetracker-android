@@ -35,7 +35,6 @@ public class SessionListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-
         return lstSession.size();
     }
 
@@ -48,8 +47,6 @@ public class SessionListAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return lstSession.indexOf(getItem(position));
-        // return position;
-        // return 0;
     }
 
     @Override
@@ -58,20 +55,35 @@ public class SessionListAdapter extends BaseAdapter {
 
         convertView = inflater.inflate(R.layout.list_item, null);
         holder.tvStatus = convertView.findViewById(R.id.tvStatus);
-        // holder.tvMinutes = view.findViewById(R.id.tvMinutes);
-        // holder.bPause = view.findViewById(R.id.bPause);
-        // holder.bStart = view.findViewById(R.id.bStart);
+        holder.tvMinutes = convertView.findViewById(R.id.tvMinutes);
+        holder.bPause = convertView.findViewById(R.id.bPause);
+        holder.bStart = convertView.findViewById(R.id.bStart);
 
         String status = lstSession.get(position).getStatus();
         holder.tvStatus.setText(status);
-        // holder.tvMinutes.setText(String.valueOf(lstSession.get(position).getSeconds()));
-/*
+        holder.tvMinutes.setText(String.valueOf(Math.round(lstSession.get(position).getSeconds()/60)));
+
+
+        if(status.equals("ended")) {
+            holder.bPause.setVisibility(View.INVISIBLE);
+            holder.bStart.setVisibility(View.INVISIBLE);
+        } else if(status.equals("started")) {
+            holder.bStart.setText("End");
+        } else if(status.equals("paused")) {
+            holder.bStart.setText("Start");
+            holder.bPause.setText("End");
+        }
+
         SessionResponse session = lstSession.get(position);
         holder.bPause.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetSessionStatus(session, "paused");
+                        if(session.getStatus().equals("started")) {
+                            SetSessionStatus(session, "paused");
+                        } else {
+                            SetSessionStatus(session, "ended");
+                        }
                     }
                 }
         );
@@ -80,11 +92,15 @@ public class SessionListAdapter extends BaseAdapter {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SetSessionStatus(session, "started");
+                        if(session.getStatus().equals("started")) {
+                            SetSessionStatus(session, "ended");
+                        } else {
+                            SetSessionStatus(session, "started");
+                        }
                     }
                 }
         );
-*/
+
         return convertView;
     }
 
@@ -99,7 +115,7 @@ public class SessionListAdapter extends BaseAdapter {
                     Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
                     ((SessionListActivity) context).GetAllSessions();
                 } else {
-                    Toast.makeText(context, response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Problem", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -111,8 +127,7 @@ public class SessionListAdapter extends BaseAdapter {
     }
 
     public class SessionDataHolders {
-        public TextView tvStatus;
-        // public Button bPause, bStart;
-       //  public TextView tvStatus, tvMinutes;
+        public Button bPause, bStart;
+        public TextView tvStatus, tvMinutes;
     }
 }
