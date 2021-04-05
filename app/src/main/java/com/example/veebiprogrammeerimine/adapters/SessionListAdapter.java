@@ -55,14 +55,16 @@ public class SessionListAdapter extends BaseAdapter {
 
         convertView = inflater.inflate(R.layout.list_item, null);
         holder.tvStatus = convertView.findViewById(R.id.tvStatus);
+
+        holder.tvTime = convertView.findViewById(R.id.tvTime);
         holder.tvMinutes = convertView.findViewById(R.id.tvMinutes);
         holder.bPause = convertView.findViewById(R.id.bPause);
         holder.bStart = convertView.findViewById(R.id.bStart);
 
+        holder.tvTime.setText("coca");
         String status = lstSession.get(position).getStatus();
         holder.tvStatus.setText(status);
         holder.tvMinutes.setText(String.valueOf(Math.round(lstSession.get(position).getSeconds()/60)));
-
 
         if(status.equals("ended")) {
             holder.bPause.setVisibility(View.INVISIBLE);
@@ -128,6 +130,6 @@ public class SessionListAdapter extends BaseAdapter {
 
     public class SessionDataHolders {
         public Button bPause, bStart;
-        public TextView tvStatus, tvMinutes;
+        public TextView tvStatus, tvMinutes, tvTime;
     }
 }

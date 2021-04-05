@@ -15,11 +15,15 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:orientation="horizontal"
-
         >
 
         <TextView
-            android:layout_width="109dp"
+            android:layout_width="97dp"
+            android:layout_height="100dp"
+            android:text="Date" />
+
+        <TextView
+            android:layout_width="78dp"
             android:layout_height="100dp"
             android:text="Status" />
 
