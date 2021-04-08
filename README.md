@@ -1,6 +1,6 @@
 # timetracker-android
 
-School project.
+School project. Android app which helps to track time.
 
 ## Requirements
 
