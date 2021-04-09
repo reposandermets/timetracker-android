@@ -61,10 +61,18 @@ public class SessionListAdapter extends BaseAdapter {
         holder.bPause = convertView.findViewById(R.id.bPause);
         holder.bStart = convertView.findViewById(R.id.bStart);
 
-        holder.tvTime.setText("coca");
+        String year = lstSession.get(position).getStarted_at().substring(0,4);
+        String month = lstSession.get(position).getStarted_at().substring(5,7);
+        String day = lstSession.get(position).getStarted_at().substring(8,10);
+
+        holder.tvTime.setText("" + day+"."+month+"."+year.substring(2,4));
         String status = lstSession.get(position).getStatus();
         holder.tvStatus.setText(status);
-        holder.tvMinutes.setText(String.valueOf(Math.round(lstSession.get(position).getSeconds()/60)));
+        if(lstSession.get(position).getSeconds()/60 > 0) {
+            holder.tvMinutes.setText(String.valueOf(Math.round(lstSession.get(position).getSeconds()/60)));
+        } else {
+            holder.tvMinutes.setText("");
+        }
 
         if(status.equals("ended")) {
             holder.bPause.setVisibility(View.INVISIBLE);
